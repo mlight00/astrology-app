@@ -25,7 +25,7 @@ function App() {
           formData.calendarType,
           formData.useYajasi,
           {
-            lat: 37.5, // Default/Placeholder Latitude as user only inputs Longitude for now or generic
+            lat: parseFloat(formData.latitude || 37.56),
             lng: parseFloat(formData.longitude || 127.0),
             timezoneOffset: parseFloat(formData.timezoneOffset || 9),
             isDst: formData.isDst || false

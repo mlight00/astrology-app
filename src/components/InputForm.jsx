@@ -11,8 +11,53 @@ const InputForm = ({ onSubmit, initialData }) => {
     birthDay: '',
     birthTime: '',
     gender: 'female',
-    calendarType: 'solar'
+    calendarType: 'solar',
+    // Default to Seoul if not specified
+    longitude: 127.0,
+    latitude: 37.56,
+    timezoneOffset: 9,
+    isDst: false
   });
+
+  // Search State
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+  const [isSearching, setIsSearching] = useState(false);
+
+  const handleLocationSearch = async () => {
+    if (!searchQuery.trim()) return;
+    setIsSearching(true);
+    try {
+        const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(searchQuery)}`);
+        const data = await response.json();
+        setSearchResults(data);
+    } catch (error) {
+        console.error("Search failed:", error);
+        alert("위치 검색에 실패했습니다.");
+    } finally {
+        setIsSearching(false);
+    }
+  };
+
+  const selectLocation = (result) => {
+      const lat = parseFloat(result.lat);
+      const lon = parseFloat(result.lon);
+      
+      // Approximate Timezone Calc (Political timezones vary, this is a rough estimate)
+      // Korea (KR) is UTC+9 special case (Longitude 127 is naturall UTC+8.5 but uses +9)
+      let tz = Math.round(lon / 15);
+      if (result.display_name.includes('South Korea') || result.display_name.includes('대한민국')) {
+          tz = 9;
+      }
+
+      setFormData({
+          ...formData,
+          latitude: lat,
+          longitude: lon,
+          timezoneOffset: tz
+      });
+      setSearchResults([]); // close results
+  };
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -178,16 +223,59 @@ const InputForm = ({ onSubmit, initialData }) => {
 
         <details className="advanced-options">
             <summary>출생지 및 정밀 시간 설정 (선택)</summary>
-            <div className="row">
+            
+            {/* Address Search Section */}
+            <div className="location-search-section">
+                <div className="input-group">
+                    <label>출생 지역 검색 (시/군/구)</label>
+                    <div className="search-box">
+                        <input 
+                            type="text" 
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), handleLocationSearch())}
+                            placeholder="예: 서울 종로구, New York, Tokyo"
+                        />
+                        <button type="button" onClick={handleLocationSearch} className="search-btn" disabled={isSearching}>
+                            {isSearching ? '검색중...' : '검색'}
+                        </button>
+                    </div>
+                    {searchResults.length > 0 && (
+                        <ul className="search-results">
+                            {searchResults.map((result, idx) => (
+                                <li key={idx} onClick={() => selectLocation(result)}>
+                                    <span className="place-name">{result.display_name}</span>
+                                    <span className="place-coords">
+                                        (Lat: {parseFloat(result.lat).toFixed(2)}, Lon: {parseFloat(result.lon).toFixed(2)})
+                                    </span>
+                                </li>
+                            ))}
+                        </ul>
+                    )}
+                </div>
+            </div>
+
+            <div className="row location-details">
                 <div className="input-group">
                     <label>경도 (Longitude)</label>
                     <input 
                         type="number" 
                         step="0.0001"
                         name="longitude" 
-                        value={formData.longitude || 127.0} 
+                        value={formData.longitude} 
                         onChange={handleChange} 
-                        placeholder="예: 126.98 (서울)"
+                        placeholder="자동 입력됨"
+                    />
+                </div>
+                <div className="input-group">
+                    <label>위도 (Latitude)</label>
+                     <input 
+                        type="number" 
+                        step="0.0001"
+                        name="latitude" 
+                        value={formData.latitude || 37.56} 
+                        onChange={handleChange} 
+                        placeholder="자동 입력됨"
                     />
                 </div>
                 <div className="input-group">
@@ -196,11 +284,12 @@ const InputForm = ({ onSubmit, initialData }) => {
                         type="number" 
                         step="0.5"
                         name="timezoneOffset" 
-                        value={formData.timezoneOffset || 9} 
+                        value={formData.timezoneOffset} 
                         onChange={handleChange} 
-                        placeholder="예: 9 (KST)"
+                        placeholder="자동 계산됨"
                     />
                 </div>
+                
                 <div className="input-group" style={{alignSelf: 'center'}}>
                      <label className="checkbox-label">
                         <input 
