@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Calendar, Clock, User, Compass } from 'lucide-react';
+import { Calendar, Clock, User, Moon, Sun } from 'lucide-react';
 import './InputForm.css';
 
 const InputForm = ({ onSubmit }) => {
@@ -9,7 +9,7 @@ const InputForm = ({ onSubmit }) => {
     birthDate: '',
     birthTime: '',
     gender: 'female',
-    topic: 'wealth'
+    calendarType: 'solar' // 'solar' | 'lunar'
   });
 
   const handleChange = (e) => {
@@ -28,12 +28,15 @@ const InputForm = ({ onSubmit }) => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
     >
-      <h2 className="form-title gradient-text">사주팔자 전문 상담</h2>
-      <p className="form-subtitle">전문적인 운세 분석을 위해 정보를 입력해 주세요.</p>
+      <div className="expert-header">
+        <h2 className="form-title gradient-text">만세력(萬歲曆) 전문가용</h2>
+        <span className="badge">Pro Ver.</span>
+      </div>
+      <p className="form-subtitle">정확한 사주 원국 산출을 위한 정보를 입력해주세요.</p>
 
       <form onSubmit={handleSubmit} className="consultation-form">
         <div className="input-group">
-          <label><User size={18} /> 이름</label>
+          <label><User size={18} /> 이름 (명조)</label>
           <input 
             type="text" 
             name="name" 
@@ -67,42 +70,58 @@ const InputForm = ({ onSubmit }) => {
           </div>
         </div>
 
-        <div className="input-group">
-          <label>성별</label>
-          <div className="radio-group">
-            <label className={formData.gender === 'female' ? 'active' : ''}>
-              <input 
-                type="radio" 
-                name="gender" 
-                value="female" 
-                checked={formData.gender === 'female'} 
-                onChange={handleChange} 
-              /> 여성
-            </label>
-            <label className={formData.gender === 'male' ? 'active' : ''}>
-              <input 
-                type="radio" 
-                name="gender" 
-                value="male" 
-                checked={formData.gender === 'male'} 
-                onChange={handleChange} 
-              /> 남성
-            </label>
-          </div>
-        </div>
+        <div className="row">
+            <div className="input-group">
+            <label>성별 (건명/곤명)</label>
+            <div className="radio-group">
+                <label className={formData.gender === 'female' ? 'active' : ''}>
+                <input 
+                    type="radio" 
+                    name="gender" 
+                    value="female" 
+                    checked={formData.gender === 'female'} 
+                    onChange={handleChange} 
+                /> 곤명(女)
+                </label>
+                <label className={formData.gender === 'male' ? 'active' : ''}>
+                <input 
+                    type="radio" 
+                    name="gender" 
+                    value="male" 
+                    checked={formData.gender === 'male'} 
+                    onChange={handleChange} 
+                /> 건명(男)
+                </label>
+            </div>
+            </div>
 
-        <div className="input-group">
-          <label><Compass size={18} /> 상담 주제</label>
-          <select name="topic" value={formData.topic} onChange={handleChange}>
-            <option value="wealth">재물운 (부와 재산)</option>
-            <option value="career">직업운 (사업과 승진)</option>
-            <option value="relationships">애정운 (결혼과 연애)</option>
-            <option value="health">건강운 (신체와 활력)</option>
-          </select>
+            <div className="input-group">
+            <label>양력/음력</label>
+            <div className="radio-group">
+                <label className={formData.calendarType === 'solar' ? 'active' : ''}>
+                <input 
+                    type="radio" 
+                    name="calendarType" 
+                    value="solar" 
+                    checked={formData.calendarType === 'solar'} 
+                    onChange={handleChange} 
+                /> <Sun size={14} style={{marginRight:4}}/> 양력
+                </label>
+                <label className={formData.calendarType === 'lunar' ? 'active' : ''}>
+                <input 
+                    type="radio" 
+                    name="calendarType" 
+                    value="lunar" 
+                    checked={formData.calendarType === 'lunar'} 
+                    onChange={handleChange} 
+                /> <Moon size={14} style={{marginRight:4}}/> 음력
+                </label>
+            </div>
+            </div>
         </div>
 
         <button type="submit" className="submit-btn bg-wood">
-          분석 시작하기
+          만세력 산출하기
         </button>
       </form>
     </motion.div>
