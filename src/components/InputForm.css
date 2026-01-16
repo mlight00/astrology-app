@@ -1,0 +1,111 @@
+.form-container {
+  max-width: 500px;
+  width: 90%;
+  padding: 3rem;
+  margin: 2rem auto;
+  text-align: center;
+}
+
+.form-title {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.form-subtitle {
+  color: #94a3b8;
+  margin-bottom: 2rem;
+}
+
+.consultation-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  text-align: left;
+}
+
+.row {
+  display: flex;
+  gap: 1rem;
+}
+.row .input-group {
+  flex: 1;
+}
+
+.input-group label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #cbd5e1;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.input-group input[type="text"],
+.input-group input[type="date"],
+.input-group input[type="time"],
+.input-group select {
+  width: 100%;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  color: white;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s;
+  box-sizing: border-box; /* Fix for width 100% overtaking padding */
+}
+
+.input-group input:focus,
+.input-group select:focus {
+  border-color: var(--color-primary);
+}
+
+.radio-group {
+  display: flex;
+  background: rgba(15, 23, 42, 0.6);
+  border-radius: 0.5rem;
+  padding: 0.25rem;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.radio-group label {
+  flex: 1;
+  text-align: center; /* Label text center */
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  margin-bottom: 0;
+  justify-content: center; /* Flex align center */
+}
+
+.radio-group label.active {
+  background: var(--bg-card-border);
+  color: white;
+  font-weight: 600;
+}
+
+.radio-group input {
+  display: none;
+}
+
+.submit-btn {
+  margin-top: 1rem;
+  padding: 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  background-image: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+}

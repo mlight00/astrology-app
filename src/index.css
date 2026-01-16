@@ -1,0 +1,81 @@
+:root {
+  /* Brand Colors */
+  --color-primary: #6366f1; /* Indigo */
+  --color-secondary: #ec4899; /* Pink */
+  --color-accent: #8b5cf6; /* Violet */
+  
+  /* Five Elements Colors */
+  --element-wood: #10b981; /* Emerald 500 */
+  --element-fire: #ef4444; /* Red 500 */
+  --element-earth: #f59e0b; /* Amber 500 */
+  --element-metal: #e5e7eb; /* Gray 200 - Silverish */
+  --element-water: #1f2937; /* Gray 800 - Deep dark */
+
+  /* Backgrounds */
+  --bg-dark: #0f172a; /* Slate 900 */
+  --bg-card: rgba(30, 41, 59, 0.7); /* Slate 800 with opacity */
+  --bg-card-border: rgba(255, 255, 255, 0.1);
+
+  /* Typography */
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-serif: 'Merriweather', serif;
+
+  /* Spacing */
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 2rem;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  background-color: var(--bg-dark);
+  color: #f8fafc; /* Slate 50 */
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  margin: 0;
+}
+
+/* Glassmorphism Utilities */
+.glass-panel {
+  background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--bg-card-border);
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* 5 Elements Classes */
+.text-wood { color: var(--element-wood); }
+.text-fire { color: var(--element-fire); }
+.text-earth { color: var(--element-earth); }
+.text-metal { color: var(--element-metal); }
+.text-water { color: #9ca3af; } /* Lighter gray for visibility on dark bg */
+
+.bg-wood { background-color: var(--element-wood); }
+.bg-fire { background-color: var(--element-fire); }
+.bg-earth { background-color: var(--element-earth); }
+.bg-metal { background-color: var(--element-metal); color: #000; }
+.bg-water { background-color: var(--element-water); }
+
+/* Animation Utils */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out forwards;
+}
