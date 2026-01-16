@@ -290,7 +290,7 @@ const InputForm = ({ onSubmit, initialData }) => {
                     />
                 </div>
                 
-                <div className="input-group" style={{alignSelf: 'center'}}>
+                <div className="input-group">
                      <label className="checkbox-label">
                         <input 
                             type="checkbox" 
@@ -298,7 +298,7 @@ const InputForm = ({ onSubmit, initialData }) => {
                             checked={formData.isDst || false} 
                             onChange={(e) => setFormData({...formData, isDst: e.target.checked})} 
                         />
-                        <span>서머타임 적용</span>
+                        <span>서머타임</span>
                     </label>
                 </div>
             </div>

@@ -168,7 +168,7 @@
     font-size: 0.85rem; /* Slightly smaller text */
     white-space: nowrap; /* Prevent text wrapping */
     height: 100%; /* Match height with inputs */
-    margin-top: 1.6rem; /* Align with input fields (label height offset) */
+    padding-bottom: 0.6rem; /* Fine-tune alignment with input fields */
 }
 .checkbox-label input {
     width: 16px;
@@ -276,16 +276,22 @@ details[open] > summary {
     border-top: 1px dashed rgba(255,255,255,0.1);
     display: flex;
     flex-wrap: wrap; /* Allow wrapping on small screens */
-    gap: 0.5rem; /* Reduce gap */
+    gap: 0.5rem;
+    align-items: flex-end; /* Align inputs to the bottom */
 }
 
 .location-details .input-group {
-    flex: 1 1 80px; /* Allow shrinking, set smaller base width */
-    min-width: 0; /* Allow flex items to shrink below content size */
+    flex: 1 1 80px;
+    min-width: 0;
+}
+
+.location-details label {
+    white-space: nowrap; /* Prevent label wrapping */
+    font-size: 0.8rem; /* Make labels slightly smaller to fit */
 }
 
 .location-details input {
     width: 100%;
-    padding: 0.5rem; /* Reduce padding slightly */
+    padding: 0.5rem;
     font-size: 0.9rem;
 }
