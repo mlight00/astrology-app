@@ -57,8 +57,18 @@ const ManseokView = ({ data, onReset }) => {
       <div className="analysis-section glass-panel">
         <div className="analysis-row">
             <div className="analysis-item">
-                <h4>일지 동물 (띠)</h4>
-                <p className="animal-text">{analysis.iljiAnimal}</p>
+                <h4>띠 (Year) / 일지 (Day)</h4>
+                <div className="animal-display">
+                    <div className="animal-box">
+                        <span>띠</span>
+                        <p className="animal-text">{analysis.yearAnimal}</p>
+                    </div>
+                    <div className="animal-divider"></div>
+                    <div className="animal-box">
+                        <span>일지</span>
+                        <p className="animal-text">{analysis.iljiAnimal}</p>
+                    </div>
+                </div>
             </div>
             <div className="analysis-item">
                 <h4>음양 및 패턴</h4>

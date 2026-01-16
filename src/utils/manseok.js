@@ -242,7 +242,8 @@ export const calculateManseok = (name, gender, birthDate, birthTime, calendarTyp
       sipseongCounts,
       byeongJon: byeongJonList,
       palTong: yangCount === 8 ? '양팔통 (All Yang)' : (yinCount === 8 ? '음팔통 (All Yin)' : null),
-      iljiAnimal: ANIMAL_MAP[pillars.day.ji.char]
+      iljiAnimal: ANIMAL_MAP[pillars.day.ji.char],
+      yearAnimal: ANIMAL_MAP[pillars.year.ji.char]
     }
   };
 };

@@ -229,13 +229,38 @@
     padding-bottom: 0.5rem;
 }
 
+.animal-display {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.animal-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.animal-box span {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    margin-bottom: 0.2rem;
+}
+
 .animal-text {
-    font-size: 2rem;
+    font-size: 1.8rem;
     font-weight: 700;
     color: white;
     margin: 0;
     text-align: center;
     line-height: 1.2;
+}
+
+.animal-divider {
+    width: 1px;
+    height: 40px;
+    background: rgba(255,255,255,0.1);
 }
 
 .pattern-list {
