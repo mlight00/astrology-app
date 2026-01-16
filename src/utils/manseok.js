@@ -48,16 +48,22 @@ export const calculateManseok = (name, gender, birthDate, birthTime, calendarTyp
   }
 
   // 1. 사주 팔자 (BaZi)
-  // lunar-javascript의 getBaZi()는 [YearGan, YearZhi, MonthGan, MonthZhi...] 형태의 배열을 반환하지 않고
-  // 각 기둥 객체를 반환하는 메소드들을 사용해야 함.
-  
-  const bazi = lunarDate.getBaZi(); // [0]: YearGan, [1]: YearZhi, [2]: MonthGan...
+  // lunar-javascript API 메서드를 사용하여 직접 값을 가져옵니다.
+  // 8글자 획득
+  const yearGan = lunarDate.getYearGan();
+  const yearZhi = lunarDate.getYearZhi();
+  const monthGan = lunarDate.getMonthGan();
+  const monthZhi = lunarDate.getMonthZhi();
+  const dayGan = lunarDate.getDayGan();
+  const dayZhi = lunarDate.getDayZhi();
+  const timeGan = lunarDate.getTimeGan();
+  const timeZhi = lunarDate.getTimeZhi();
   
   const pillars = {
-    year: { gan: bazi[0], ji: bazi[1] },
-    month: { gan: bazi[2], ji: bazi[3] },
-    day: { gan: bazi[4], ji: bazi[5] },
-    time: { gan: bazi[6], ji: bazi[7] }
+    year: { gan: yearGan, ji: yearZhi },
+    month: { gan: monthGan, ji: monthZhi },
+    day: { gan: dayGan, ji: dayZhi },
+    time: { gan: timeGan, ji: timeZhi }
   };
 
   // 한글 매핑 및 오행 추가

@@ -8,8 +8,10 @@ import './App.css';
 function App() {
   const [view, setView] = useState('input'); // 'input' | 'loading' | 'results'
   const [data, setData] = useState(null);
+  const [lastInput, setLastInput] = useState(null);
 
   const handleConsultationSubmit = (formData) => {
+    setLastInput(formData);
     setView('loading');
     
     // 비동기 처리 시뮬레이션 (계산은 순식이지만 UX를 위해)
@@ -34,6 +36,7 @@ function App() {
 
   const handleReset = () => {
     setData(null);
+    setLastInput(null); // Clear input on explicit reset
     setView('input');
   };
 
@@ -45,7 +48,7 @@ function App() {
       <main>
         {view === 'input' && (
           <div className="hero-section">
-            <InputForm onSubmit={handleConsultationSubmit} />
+            <InputForm onSubmit={handleConsultationSubmit} initialData={lastInput} />
           </div>
         )}
 

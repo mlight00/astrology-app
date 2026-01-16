@@ -3,13 +3,15 @@ import { motion } from 'framer-motion';
 import { Calendar, Clock, User, Moon, Sun } from 'lucide-react';
 import './InputForm.css';
 
-const InputForm = ({ onSubmit }) => {
-  const [formData, setFormData] = useState({
+const InputForm = ({ onSubmit, initialData }) => {
+  const [formData, setFormData] = useState(initialData || {
     name: '',
-    birthDate: '',
+    birthYear: '',
+    birthMonth: '',
+    birthDay: '',
     birthTime: '',
     gender: 'female',
-    calendarType: 'solar' // 'solar' | 'lunar'
+    calendarType: 'solar'
   });
 
   const handleChange = (e) => {
@@ -18,7 +20,22 @@ const InputForm = ({ onSubmit }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(formData);
+    // Combine YMD into birthDate format for processing
+    const y = formData.birthYear;
+    const m = formData.birthMonth.toString().padStart(2, '0');
+    const d = formData.birthDay.toString().padStart(2, '0');
+    
+    // Basic validation
+    if (!y || !m || !d) {
+        alert("생년월일을 정확히 입력해주세요.");
+        return;
+    }
+
+    const fullData = {
+        ...formData,
+        birthDate: `${y}-${m}-${d}`
+    };
+    onSubmit(fullData);
   };
 
   return (
@@ -48,17 +65,42 @@ const InputForm = ({ onSubmit }) => {
         </div>
 
         <div className="row">
-          <div className="input-group">
-            <label><Calendar size={18} /> 생년월일</label>
-            <input 
-              type="date" 
-              name="birthDate" 
-              value={formData.birthDate} 
-              onChange={handleChange} 
-              required 
-            />
+          <div className="input-group" style={{flex: 2}}>
+            <label><Calendar size={18} /> 생년월일 (직접 입력)</label>
+            <div className="date-inputs">
+                <input 
+                  type="number" 
+                  name="birthYear" 
+                  value={formData.birthYear} 
+                  onChange={handleChange} 
+                  placeholder="YYYY"
+                  min="1900" max="2100"
+                  required 
+                />
+                <span>년</span>
+                <input 
+                  type="number" 
+                  name="birthMonth" 
+                  value={formData.birthMonth} 
+                  onChange={handleChange} 
+                  placeholder="MM"
+                  min="1" max="12"
+                  required 
+                />
+                <span>월</span>
+                <input 
+                  type="number" 
+                  name="birthDay" 
+                  value={formData.birthDay} 
+                  onChange={handleChange} 
+                  placeholder="DD"
+                  min="1" max="31"
+                  required 
+                />
+                <span>일</span>
+            </div>
           </div>
-          <div className="input-group">
+          <div className="input-group" style={{flex: 1}}>
             <label><Clock size={18} /> 태어난 시간</label>
             <input 
               type="time" 

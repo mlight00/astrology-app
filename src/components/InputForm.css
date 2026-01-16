@@ -109,3 +109,48 @@
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
 }
+
+/* Date Input Split Styling */
+.date-inputs {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.date-inputs input {
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    color: white;
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    outline: none;
+    text-align: center;
+    /* width managed by flex below */
+}
+
+/* Year input wider */
+.date-inputs input[name="birthYear"] {
+    flex: 2;
+    min-width: 60px;
+}
+/* Day/Month narrower */
+.date-inputs input[name="birthMonth"],
+.date-inputs input[name="birthDay"] {
+    flex: 1;
+    min-width: 40px;
+}
+
+.date-inputs span {
+    color: #94a3b8;
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+/* Remove spinners from number input */
+.input-group input[type="number"]::-webkit-inner-spin-button, 
+.input-group input[type="number"]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
