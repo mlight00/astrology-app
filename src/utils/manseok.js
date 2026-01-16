@@ -85,24 +85,29 @@ export const calculateManseok = (name, gender, birthDate, birthTime, calendarTyp
   });
 
   // 2. 대운 계산 (Dae-wun)
-  // 대운수 계산 (간략화된 로직 또는 라이브러리 기능 활용)
-  // lunar-javascript에 대운 계산 기능이 포함되어 있음 (Yun)
-  const yun = lunarDate.getYun(gender === 'male' ? 1 : 0); // 1: Man, 0: Woman
-  const daeYun = yun.getDaYun();
-  
+  // lunar-javascript: Lunar -> EightChar -> Yun -> DaYun[]
+  const eightChar = lunarDate.getEightChar();
+  const yun = eightChar.getYun(gender === 'male' ? 1 : 0); // 1: Man, 0: Woman
+  const daeYunArr = yun.getDaYun(); // This returns the array of DaYun objects
   const daeWunList = [];
-  // 대운은 보통 10개 정도 보여줌
-  const daeYunArr = daeYun.getDaYun();
   
-  // 라이브러리 버전에 따라 사용법이 다를 수 있어 안전하게 인덱스 순회
-  for (let i = 0; i < 10; i++) {
-    if (i >= daeYunArr.length) break;
-    const dy = daeYunArr[i];
-    daeWunList.push({
-      startAge: dy.getStartYear(), // 대운 시작 나이
-      gan: { char: dy.getGanZhi().substring(0, 1), element: ELEMENT_MAP[dy.getGanZhi().substring(0, 1)] },
-      ji: { char: dy.getGanZhi().substring(1, 2), element: ELEMENT_MAP[dy.getGanZhi().substring(1, 2)] }
-    });
+  if (daeYunArr && daeYunArr.length > 0) {
+      // 순회하며 유효한 대운만 추가
+      daeYunArr.forEach((dy) => {
+          if (daeWunList.length >= 10) return; // 최대 10개
+
+          const ganZhi = dy.getGanZhi();
+          if (!ganZhi || ganZhi.trim() === '') return; // 간지가 없으면 스킵
+
+          const startChar = ganZhi.substring(0, 1);
+          const endChar = ganZhi.substring(1, 2);
+
+          daeWunList.push({
+            startAge: dy.getStartYear(),
+            gan: { char: startChar, element: ELEMENT_MAP[startChar] || 'water' }, // 기본값 처리
+            ji: { char: endChar, element: ELEMENT_MAP[endChar] || 'water' }
+          });
+      });
   }
 
   return {
