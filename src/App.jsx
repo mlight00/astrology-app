@@ -22,7 +22,14 @@ function App() {
           formData.gender,
           formData.birthDate,
           formData.birthTime,
-          formData.calendarType
+          formData.calendarType,
+          formData.useYajasi,
+          {
+            lat: 37.5, // Default/Placeholder Latitude as user only inputs Longitude for now or generic
+            lng: parseFloat(formData.longitude || 127.0),
+            timezoneOffset: parseFloat(formData.timezoneOffset || 9),
+            isDst: formData.isDst || false
+          }
         );
         setData(result);
         setView('results');

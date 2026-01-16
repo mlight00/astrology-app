@@ -162,6 +162,59 @@ const InputForm = ({ onSubmit, initialData }) => {
             </div>
         </div>
 
+        <div className="row">
+             <div className="input-group yajasi-group">
+                <label className="checkbox-label">
+                    <input 
+                        type="checkbox" 
+                        name="useYajasi" 
+                        checked={formData.useYajasi || false} 
+                        onChange={(e) => setFormData({...formData, useYajasi: e.target.checked})} 
+                    />
+                    <span>야자시(夜子時) 적용</span>
+                </label>
+             </div>
+        </div>
+
+        <details className="advanced-options">
+            <summary>출생지 및 정밀 시간 설정 (선택)</summary>
+            <div className="row">
+                <div className="input-group">
+                    <label>경도 (Longitude)</label>
+                    <input 
+                        type="number" 
+                        step="0.0001"
+                        name="longitude" 
+                        value={formData.longitude || 127.0} 
+                        onChange={handleChange} 
+                        placeholder="예: 126.98 (서울)"
+                    />
+                </div>
+                <div className="input-group">
+                    <label>표준시 (UTC Offset)</label>
+                    <input 
+                        type="number" 
+                        step="0.5"
+                        name="timezoneOffset" 
+                        value={formData.timezoneOffset || 9} 
+                        onChange={handleChange} 
+                        placeholder="예: 9 (KST)"
+                    />
+                </div>
+                <div className="input-group" style={{alignSelf: 'center'}}>
+                     <label className="checkbox-label">
+                        <input 
+                            type="checkbox" 
+                            name="isDst" 
+                            checked={formData.isDst || false} 
+                            onChange={(e) => setFormData({...formData, isDst: e.target.checked})} 
+                        />
+                        <span>서머타임 적용</span>
+                    </label>
+                </div>
+            </div>
+        </details>
+
         <button type="submit" className="submit-btn bg-wood">
           만세력 산출하기
         </button>
